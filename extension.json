@@ -17,7 +17,7 @@
         {
             "name": "TEST_TOOL_SELECT",
             "type": "Select",
-            "required": "true",
+            "required": "false",
             "default_value": "",
             "label_key": "TEST_TOOL_SELECT_KEY",
             "desc_key": "TEST_TOOL_SELECT_DESC",
@@ -55,7 +55,7 @@
         {
             "name": "CHECK_TEST_REGRESSION",
             "type": "Checkbox",
-            "required": "true",
+            "required": "false",
             "default_value": "true",
             "label_key": "CHECK_TEST_REGRESSION_KEY",
             "desc_key": "CHECK_TEST_REGRESSION_DESC"
@@ -103,7 +103,7 @@
         {
             "name": "CHECK_COVERAGE_REGRESSION",
             "type": "Checkbox",
-            "required": "true",
+            "required": "false",
             "default_value": "true",
             "label_key": "CHECK_COVERAGE_REGRESSION_KEY",
             "desc_key": "CHECK_COVERAGE_REGRESSION_DESC"
@@ -166,12 +166,12 @@ function custom_cmd {
     
 export -f custom_cmd
 
-. $EXT_DIR/execute.sh
-RESULT=$?
+#. $EXT_DIR/execute.sh
+#RESULT=$?
         
-if [ $RESULT -ne 0 ]; then
-    exit 1
-fi
+#if [ $RESULT -ne 0 ]; then
+#    exit 1
+#fi
     "},
     "project": "https://hub.jazz.net/project/alchemy/Alchemy-Ostanes",
     "project_example": "https://hub.jazz.net/pipeline/Osthanes/blazemeter_static",
