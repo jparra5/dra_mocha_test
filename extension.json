@@ -1,0 +1,143 @@
+{
+    "id": "ibm.devops.services.pipeline.dra_simple_test",
+    "version": 1,
+    "name_key": "ExtName",
+    "desc_key": "ExtDesc",
+    "extension_type": "Test",
+    "message_key": "ExtMessage",
+    "params": [
+        {
+            "name": "PROJECT_KEY",
+            "type": "Secure",
+            "required": "true",
+            "default_value": "",
+            "label_key": "PROJECT_KEY_KEY",
+            "desc_key": "PROJECT_KEY_DESC"
+        },
+        
+        
+        
+        {
+            "name": "EVENT_TYPE_1",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "EVENT_TYPE_KEY_1",
+            "desc_key": "EVENT_TYPE_DESC"
+        },
+        {
+            "name": "FILE_1",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "FILE_KEY_1",
+            "desc_key": "FILE_DESC"
+        },
+        
+        
+        
+        {
+            "name": "EVENT_TYPE_2",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "EVENT_TYPE_KEY_2",
+            "desc_key": "EVENT_TYPE_DESC"
+        },
+        {
+            "name": "FILE_2",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "FILE_KEY_2",
+            "desc_key": "FILE_DESC"
+        },
+        
+        
+        
+        {
+            "name": "EVENT_TYPE_3",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "EVENT_TYPE_KEY_3",
+            "desc_key": "EVENT_TYPE_DESC"
+        },
+        {
+            "name": "FILE_3",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "FILE_KEY_3",
+            "desc_key": "FILE_DESC"
+        },
+        
+        {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
+        }
+    ],
+    "outputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        },
+        {
+            "type": "Tests",
+            "inclusion": "optional"
+        }
+    ],
+    "execution": {
+        "type": "JenkinsDocker",
+        "shell": "#!/bin/bash
+
+set +x
+set +e 
+
+        
+export DRA_PROJECT_KEY=#PROJECT_KEY#
+export DRA_EVENT_TYPE_1=#EVENT_TYPE_1#
+export DRA_FILE_1=#FILE_1#
+export DRA_SERVER_1=#SERVER_1#
+export DRA_EVENT_TYPE_2=#EVENT_TYPE_2#
+export DRA_FILE_2=#FILE_2#
+export DRA_SERVER_2=#SERVER_2#
+export DRA_EVENT_TYPE_3=#EVENT_TYPE_3#
+export DRA_FILE_3=#FILE_3#
+export DRA_SERVER_3=#SERVER_3#
+        
+#check for defined host/port, if null set defaults
+if [ -z \"$HOST\" ]; then
+    export HOST=ondemand.saucelabs.com
+fi
+        
+if [ -z \"$PORT\" ]; then
+    export PORT=80
+fi
+
+function custom_cmd {
+    eval #COMMAND#
+    RESULT=$?
+
+    if [ $RESULT -ne 0 ]; then
+        exit 1
+    fi
+}
+    
+export -f custom_cmd
+
+. $EXT_DIR/execute.sh
+RESULT=$?
+        
+if [ $RESULT -ne 0 ]; then
+    exit 1
+fi
+    "},
+    "project": "https://hub.jazz.net/project/alchemy/Alchemy-Ostanes",
+    "project_example": "https://hub.jazz.net/pipeline/Osthanes/blazemeter_static",
+    "project_contact": "jparra@us.ibm.com"
+}
