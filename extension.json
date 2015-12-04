@@ -115,6 +115,14 @@
             "default_value": "",
             "label_key": "COVERAGE_REGRESSION_THRESHOLD_KEY",
             "desc_key": "COVERAGE_REGRESSION_THRESHOLD_DESC"
+        },
+        {
+            "name": "CRITICAL_TESTCASES",
+            "type": "Text",
+            "required": "false",
+            "default_value": "",
+            "label_key": "CRITICAL_TESTCASES_KEY",
+            "desc_key": "CRITICAL_TESTCASES_DESC"
         }
     ],
     "outputs": [
@@ -145,6 +153,7 @@ export DRA_SERVER_2=#SERVER_2#
 export DRA_EVENT_TYPE_3=#EVENT_TYPE_3#
 export DRA_FILE_3=#FILE_3#
 export DRA_SERVER_3=#SERVER_3#
+export DRA_CRITICAL_TESTCASES = #CRITICAL_TESTCASES#
         
 #check for defined host/port, if null set defaults
 if [ -z \"$HOST\" ]; then
@@ -165,6 +174,8 @@ function custom_cmd {
 }
     
 export -f custom_cmd
+    
+echo "DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}"
 
 #. $EXT_DIR/execute.sh
 #RESULT=$?
