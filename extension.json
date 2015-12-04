@@ -153,7 +153,7 @@ export DRA_SERVER_2=#SERVER_2#
 export DRA_EVENT_TYPE_3=#EVENT_TYPE_3#
 export DRA_FILE_3=#FILE_3#
 export DRA_SERVER_3=#SERVER_3#
-export DRA_CRITICAL_TESTCASES = #CRITICAL_TESTCASES#
+export DRA_CRITICAL_TESTCASES=#CRITICAL_TESTCASES#
         
 #check for defined host/port, if null set defaults
 if [ -z \"$HOST\" ]; then
