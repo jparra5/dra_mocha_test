@@ -175,7 +175,7 @@ function custom_cmd {
     
 export -f custom_cmd
     
-echo "DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}"
+echo \"DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}\"
 
 #. $EXT_DIR/execute.sh
 #RESULT=$?
