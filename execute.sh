@@ -147,13 +147,13 @@ fi
 
 
 if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
-    name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
+    name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
     criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
     echo "criteria:  $criteria"
 fi
 
 if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" != " " ]; then
-    name="No Regression in Unit Tests (${DRA_COVERAGE_TOOL_SELECT})"
+    name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
     criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
     echo "criteria:  $criteria"
 fi
