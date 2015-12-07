@@ -33,35 +33,11 @@ debugme() {
 set +e
 set +x 
 
-function dra_logger {
-    npm install grunt
-    npm install grunt-cli
-    npm install grunt-idra
-
-    echo "DRA_PROJECT_KEY: ${DRA_PROJECT_KEY}"
-    echo "event: ${DRA_EVENT_TYPE_1}"
-    echo -e "└── file: ${DRA_FILE_1}"
-    #echo -e "└── server: ${DRA_SERVER}"
-    echo "event 2: ${DRA_EVENT_TYPE_2}"
-    echo -e "└──file: ${DRA_FILE_2}"
-    #echo -e "└──server: ${DRA_SERVER_2}"
-    echo "event 3: ${DRA_EVENT_TYPE_3}"
-    echo -e "└──file: ${DRA_FILE_3}"
-    #echo -e "└──server: ${DRA_SERVER_3}"
-    echo -e ""
-
-    #dra_commands "${DRA_EVENT_TYPE_1}" "${DRA_FILE_1}" "${DRA_SERVER}"
-    #dra_commands "${DRA_EVENT_TYPE_2}" "${DRA_FILE_2}" "${DRA_SERVER}"
-    #dra_commands "${DRA_EVENT_TYPE_3}" "${DRA_FILE_3}" "${DRA_SERVER}"
-    dra_commands "${DRA_EVENT_TYPE_1}" "${DRA_FILE_1}"
-    dra_commands "${DRA_EVENT_TYPE_2}" "${DRA_FILE_2}"
-    dra_commands "${DRA_EVENT_TYPE_3}" "${DRA_FILE_3}"
+npm install grunt
+npm install grunt-cli
+npm install grunt-idra
 
 
-    
-    #grunt --gruntfile=node_modules/grunt-idra/idra.js -eventType=istanbulCoverage -file=tests/coverage/reports/coverage-summary.json
-    #grunt --gruntfile=node_modules/grunt-idra/idra.js -eventType=testComplete -deployAnalyticsServer=https://da-test.oneibmcloud.com    
-}
 
 function dra_commands {
     dra_grunt_command=""
@@ -103,17 +79,88 @@ function dra_commands {
     fi
 }
 
+function criteria_for_ut {
+    dra_grunt_command=""
+    
+    if [ -n "$1" ] && [ "$1" != " " ]; then
+        echo "Event: '$1' is defined and not empty"
+        
+        dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra/idra.js -eventType=$1"
+        
+        echo -e "\tdra_grunt_command: $dra_grunt_command"
+        
+        if [ -n "$2" ] && [ "$2" != " " ]; then
+            echo -e "\tFile: '$2' is defined and not empty"
+            
+            dra_grunt_command="$dra_grunt_command -file=$2"
+        
+            echo -e "\t\tdra_grunt_command: $dra_grunt_command"
+            
+        else
+            echo -e "\tFile: '$2' is not defined or is empty"
+        fi
+        #if [ -n "$3" ] && [ "$3" != " " ]; then
+        #    echo -e "\tServer: '$3' is defined and not empty"
+        #
+        #    dra_grunt_command="$dra_grunt_command -deployAnalyticsServer=$3"
+        #
+        #    echo -e "\t\tdra_grunt_command: $dra_grunt_command"
+        #
+        #else
+        #    echo -e "\tServer: '$3' is not defined or is empty"
+        #fi
+        
+        echo -e "\tFINAL dra_grunt_command: $dra_grunt_command"
+        echo ""
+        
+        eval $dra_grunt_command
+    else
+        echo "Event: '$1' is not defined or is empty"
+    fi
+}
 
 
 
-custom_cmd
+echo "DRA_PROJECT_KEY: ${DRA_PROJECT_KEY}"
 
-dra_logger
+echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
+echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
+echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
+echo "DRA_CHECK_TEST_REGRESSION: ${DRA_CHECK_TEST_REGRESSION}"
+
+echo "DRA_COVERAGE_TOOL_SELECT: ${DRA_COVERAGE_TOOL_SELECT}"
+echo "DRA_COVERAGE_LOG_FILE: ${DRA_COVERAGE_LOG_FILE}"
+echo "DRA_MINIMUM_COVERAGE_RATE: ${DRA_MINIMUM_COVERAGE_RATE}"
+echo "DRA_CHECK_COVERAGE_REGRESSION: ${DRA_CHECK_COVERAGE_REGRESSION}"
+echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
+echo "DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}"
 
 
 
+if [ "${DRA_TEST_TOOL_SELECT}" != "none" ]; then
+    dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
+fi
+
+if [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ]; then
+    dra_commands "${DRA_COVERAGE_TOOL_SELECT}Coverage" "${DRA_COVERAGE_LOG_FILE}"
+fi
 
 
+if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
+    name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
+    criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+    echo "criteria:  $criteria"
+fi
+
+if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" != " " ]; then
+    name="No Regression in Unit Tests (${DRA_COVERAGE_TOOL_SELECT})"
+    criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+    echo "criteria:  $criteria"
+fi
+
+#if [ -n "${00000}" ] && [ "${000000}" != " " ]; then
+#
+#fi
 
 
 
