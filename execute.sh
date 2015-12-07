@@ -185,9 +185,9 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
             condition_2="{ \"eval\": \"filecontents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
         fi
         
-        criteria="{ \"name\": \"$name\", \"conditions\": [ 
-        criteria="$condition_1, $condition_2"
-        criteria="] }"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ "
+        criteria="$criteria $condition_1, $condition_2"
+        criteria="$criteria ] }"
 
         echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
@@ -202,13 +202,31 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
             condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
         fi
         
-        criteria="{ \"name\": \"$name\", \"conditions\": [ 
-        criteria="$condition_1"
-        criteria="] }"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ "
+        criteria="$criteria $condition_1"
+        criteria="$criteria ] }"
 
         echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
     fi
 fi
 
-echo ${Unix[@]}
+
+
+
+echo ${criteriaList[@]}
+
+criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"decision\", \"rules\": [ "
+
+for i in "${criteriaList[@]}"
+do
+	criteria="$criteria $i,"
+done
+
+
+criteria="${criteria%?}"
+criteria="$criteria ] }"
+
+
+echo "woot:"
+echo "$criteria"
