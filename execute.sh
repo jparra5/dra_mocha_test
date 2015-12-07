@@ -136,31 +136,79 @@ echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
 echo "DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}"
 
 
+criteriaList=()
 
-if [ "${DRA_TEST_TOOL_SELECT}" != "none" ]; then
+
+if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] && \
+    [ -n "${DRA_TEST_LOG_FILE}" ] && [ "${DRA_TEST_LOG_FILE}" != " " ]; then
+
     dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
+    
+    if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
+        name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+        
+#        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
+#            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_karmaMochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+#        fi
+        
+        echo "criteria:  $criteria"
+        criteriaList=("${criteriaList[@]}" "$criteria")
+    fi
+
+    if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
+        name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+        
+        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+        fi
+        
+        echo "criteria:  $criteria"
+        criteriaList=("${criteriaList[@]}" "$criteria")
+    fi
 fi
 
-if [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ]; then
+if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ] && \
+    [ -n "${DRA_COVERAGE_LOG_FILE}" ] && [ "${DRA_COVERAGE_LOG_FILE}" != " " ]; then
+
     dra_commands "${DRA_COVERAGE_TOOL_SELECT}Coverage" "${DRA_COVERAGE_LOG_FILE}"
+
+    if [ -n "${DRA_MINIMUM_COVERAGE_RATE}" ] && [ "${DRA_MINIMUM_COVERAGE_RATE}" != " " ]; then
+        name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
+
+        condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
+        condition_2="{ \"eval\": \"filecontents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
+        
+        if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
+            condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
+            condition_2="{ \"eval\": \"filecontents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
+        fi
+        
+        criteria="{ \"name\": \"$name\", \"conditions\": [ 
+        criteria="$condition_1, $condition_2"
+        criteria="] }"
+
+        echo "criteria:  $criteria"
+        criteriaList=("${criteriaList[@]}" "$criteria")
+    fi
+
+    if [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
+        name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
+
+        condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+        
+        if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
+            condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+        fi
+        
+        criteria="{ \"name\": \"$name\", \"conditions\": [ 
+        criteria="$condition_1"
+        criteria="] }"
+
+        echo "criteria:  $criteria"
+        criteriaList=("${criteriaList[@]}" "$criteria")
+    fi
 fi
 
-
-if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
-    name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
-    criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
-    echo "criteria:  $criteria"
-fi
-
-if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" != " " ]; then
-    name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
-    criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
-    echo "criteria:  $criteria"
-fi
-
-#if [ -n "${00000}" ] && [ "${000000}" != " " ]; then
-#
-#fi
-
-
-
+echo ${Unix[@]}

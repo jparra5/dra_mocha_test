@@ -76,7 +76,7 @@
                 },
                 {
                     "label_key": "COVERAGE_TOOL_OPTION_2_KEY",
-                    "value": "blanketJs"
+                    "value": "blanket"
                 },
                 { 
                     "label_key": "COVERAGE_TOOL_OPTION_3_KEY",
