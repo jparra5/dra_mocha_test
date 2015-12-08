@@ -123,6 +123,16 @@
             "default_value": " ",
             "label_key": "CRITICAL_TESTCASES_KEY",
             "desc_key": "CRITICAL_TESTCASES_DESC"
+        },
+        
+        
+        {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
         }
     ],
     "outputs": [
@@ -153,18 +163,26 @@ export DRA_CHECK_TEST_REGRESSION=#CHECK_TEST_REGRESSION#
         
 export DRA_COVERAGE_TOOL_SELECT=#COVERAGE_TOOL_SELECT#
 export DRA_COVERAGE_LOG_FILE=#COVERAGE_LOG_FILE#
-export DRA_MINIMUM_COVERAGE_RATE=#MINIMUM_COVERAGE_RATE#
+export DRA_MINIMUM_COVERAGE_RATE=\"#MINIMUM_COVERAGE_RATE#\"
 export DRA_CHECK_COVERAGE_REGRESSION=#CHECK_COVERAGE_REGRESSION#
 export DRA_COVERAGE_REGRESSION_THRESHOLD=#COVERAGE_REGRESSION_THRESHOLD#
 export DRA_CRITICAL_TESTCASES=\"#CRITICAL_TESTCASES#\"
-        
-
 
         
+        
+function custom_cmd {
+    eval #COMMAND#
+    RESULT=$?
 
+    if [ $RESULT -ne 0 ]; then
+        exit 1
+    fi
+}
     
-echo \"DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}\"
-
+export -f custom_cmd        
+        
+        
+        
 . $EXT_DIR/execute.sh
 RESULT=$?
         

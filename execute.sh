@@ -136,6 +136,11 @@ echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
 echo "DRA_CRITICAL_TESTCASES: ${DRA_CRITICAL_TESTCASES}"
 
 
+
+custom_cmd
+
+
+
 criteriaList=()
 
 
@@ -228,5 +233,9 @@ criteria="${criteria%?}"
 criteria="$criteria ] }"
 
 
-echo "woot:"
-echo "$criteria"
+echo $criteria > dynamicCriteria.json
+
+
+cat $criteria
+
+grunt --gruntfile=node_modules/grunt-idra/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
