@@ -236,6 +236,6 @@ criteria="$criteria ] }"
 echo $criteria > dynamicCriteria.json
 
 
-cat $criteria
+cat dynamicCriteria.json
 
 grunt --gruntfile=node_modules/grunt-idra/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
