@@ -123,14 +123,6 @@
             "default_value": " ",
             "label_key": "COVERAGE_REGRESSION_THRESHOLD_KEY",
             "desc_key": "COVERAGE_REGRESSION_THRESHOLD_DESC"
-        },
-        {
-            "name": "CRITICAL_TESTCASES",
-            "type": "Text",
-            "required": "false",
-            "default_value": " ",
-            "label_key": "CRITICAL_TESTCASES_KEY",
-            "desc_key": "CRITICAL_TESTCASES_DESC"
         }
     ],
     "outputs": [
@@ -164,7 +156,6 @@ export DRA_COVERAGE_LOG_FILE=#COVERAGE_LOG_FILE#
 export DRA_MINIMUM_COVERAGE_RATE=\"#MINIMUM_COVERAGE_RATE#\"
 export DRA_CHECK_COVERAGE_REGRESSION=#CHECK_COVERAGE_REGRESSION#
 export DRA_COVERAGE_REGRESSION_THRESHOLD=#COVERAGE_REGRESSION_THRESHOLD#
-export DRA_CRITICAL_TESTCASES=\"#CRITICAL_TESTCASES#\"
 
         
         
