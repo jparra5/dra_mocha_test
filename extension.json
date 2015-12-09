@@ -15,6 +15,14 @@
             "desc_key": "PROJECT_KEY_DESC"
         },
         {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
+        },
+        {
             "name": "TEST_TOOL_SELECT",
             "type": "Select",
             "required": "false",
@@ -123,16 +131,6 @@
             "default_value": " ",
             "label_key": "CRITICAL_TESTCASES_KEY",
             "desc_key": "CRITICAL_TESTCASES_DESC"
-        },
-        
-        
-        {
-            "name": "COMMAND",
-            "type": "TextArea",
-            "required": "true",
-            "default_value" : "#!/bin/bash",
-            "label_key": "COMMAND_KEY",
-            "desc_key": "COMMAND_DESC"
         }
     ],
     "outputs": [
