@@ -218,7 +218,7 @@ fi
 
 
 
-echo ${criteriaList[@]}
+#echo ${criteriaList[@]}
 
 criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"decision\", \"rules\": [ "
 
