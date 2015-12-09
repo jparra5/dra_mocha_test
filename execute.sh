@@ -150,25 +150,25 @@ if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] &
     
     if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
         name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
-        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
         
 #        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
 #            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_karmaMochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
 #        fi
         
-        echo "criteria:  $criteria"
+        #echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
     fi
 
     if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
         name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
-        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+        criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
         
         if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
         fi
         
-        echo "criteria:  $criteria"
+        #echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
     fi
 fi
@@ -193,7 +193,7 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
         criteria="$criteria $condition_1, $condition_2"
         criteria="$criteria ] }"
 
-        echo "criteria:  $criteria"
+        #echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
     fi
 
@@ -210,7 +210,7 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
         criteria="$criteria $condition_1"
         criteria="$criteria ] }"
 
-        echo "criteria:  $criteria"
+        #echo "criteria:  $criteria"
         criteriaList=("${criteriaList[@]}" "$criteria")
     fi
 fi
