@@ -200,10 +200,10 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
     if [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
         name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
-        condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+        condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\" }"
         
         if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-            condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+            condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\" }"
         fi
         
         criteria="{ \"name\": \"$name\", \"conditions\": [ "
