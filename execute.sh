@@ -216,25 +216,26 @@ if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "n
 fi
 
 
+if [ ${#criteriaList[@]} -gt 0 ]; then
+    criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"decision\", \"rules\": [ "
+
+    for i in "${criteriaList[@]}"
+    do
+        criteria="$criteria $i,"
+    done
 
 
-#echo ${criteriaList[@]}
-
-criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"decision\", \"rules\": [ "
-
-for i in "${criteriaList[@]}"
-do
-	criteria="$criteria $i,"
-done
+    criteria="${criteria%?}"
+    criteria="$criteria ] }"
 
 
-criteria="${criteria%?}"
-criteria="$criteria ] }"
+    echo $criteria > dynamicCriteria.json
 
 
-echo $criteria > dynamicCriteria.json
+    cat dynamicCriteria.json
+
+    grunt --gruntfile=node_modules/grunt-idra/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
+fi
 
 
-cat dynamicCriteria.json
 
-grunt --gruntfile=node_modules/grunt-idra/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
