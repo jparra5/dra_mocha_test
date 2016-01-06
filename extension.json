@@ -1,5 +1,5 @@
 {
-    "id": "ibm.devops.services.pipeline.dra_ut_decision_gate",
+    "id": "ibm.devops.services.pipeline.dra_mocha_test",
     "version": 1,
     "name_key": "ExtName",
     "desc_key": "ExtDesc",
