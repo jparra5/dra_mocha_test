@@ -106,7 +106,7 @@ custom_cmd
 
 
 
-${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" ${IDS_PROJECT_NAME}
+${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}"
 RESULT=$?
 
 #0 = DRA is present
