@@ -9,7 +9,7 @@ import requests
 
 if len(sys.argv) < 4:
     print "ERROR: TOOLCHAIN_ID, BEARER, or PROJECT_NAME are not defined."
-    exit(0)
+    exit(1)
     
     
 TOOLCHAIN_ID = sys.argv[1]
@@ -41,6 +41,8 @@ except requests.exceptions.RequestException as e:    # This is the correct synta
     
     
 
-
                 
-exit(DRA_PRESENT)
+if DRA_PRESENT:
+    exit(0)
+else:
+    exit(1)

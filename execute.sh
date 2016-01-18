@@ -106,14 +106,14 @@ custom_cmd
 
 
 
-${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} ${CF_TOKEN} ${IDS_PROJECT_NAME}
+${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" ${IDS_PROJECT_NAME}
 RESULT=$?
 
-#1 = DRA is present
-#0 = DRA not present or there was an error with the http call (err msg will show)
+#0 = DRA is present
+#1 = DRA not present or there was an error with the http call (err msg will show)
 #echo $RESULT
 
-if [ $RESULT -eq 1 ]; then
+if [ $RESULT -eq 0 ]; then
     echo "DRA is present";
     
     criteriaList=()
