@@ -43,21 +43,23 @@ function dra_commands {
     dra_grunt_command=""
     
     if [ -n "$1" ] && [ "$1" != " " ]; then
-        echo "Event: '$1' is defined and not empty"
+        #echo "Event: '$1' is defined and not empty"
         
         dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra2/idra.js -eventType=$1"
         
-        echo -e "\tdra_grunt_command: $dra_grunt_command"
+        #echo -e "\tdra_grunt_command: $dra_grunt_command"
         
         if [ -n "$2" ] && [ "$2" != " " ]; then
-            echo -e "\tFile: '$2' is defined and not empty"
+            #echo -e "\tFile: '$2' is defined and not empty"
             
             dra_grunt_command="$dra_grunt_command -file=$2"
         
-            echo -e "\t\tdra_grunt_command: $dra_grunt_command"
+            #echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
         else
-            echo -e "\tFile: '$2' is not defined or is empty"
+            echo -e "${no_color}"
+            echo -e "File: '$2' is not defined or is empty"
+            echo -e "${no_color}"
         fi
         #if [ -n "$3" ] && [ "$3" != " " ]; then
         #    echo -e "\tServer: '$3' is defined and not empty"
@@ -70,17 +72,22 @@ function dra_commands {
         #    echo -e "\tServer: '$3' is not defined or is empty"
         #fi
         
-        echo -e "\tFINAL dra_grunt_command: $dra_grunt_command"
-        echo ""
+        echo -e "${no_color}"
+        echo -e "FINAL dra_grunt_command: $dra_grunt_command"
+        echo -e "${no_color}"
+        
         
         eval $dra_grunt_command
+        echo -e "${no_color}"
     else
+        echo -e "${no_color}"
         echo "Event: '$1' is not defined or is empty"
+        echo -e "${no_color}"
     fi
 }
 
 
-
+echo -e "${no_color}"
 echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
 echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
 echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
@@ -91,13 +98,14 @@ echo "DRA_COVERAGE_LOG_FILE: ${DRA_COVERAGE_LOG_FILE}"
 echo "DRA_MINIMUM_COVERAGE_RATE: ${DRA_MINIMUM_COVERAGE_RATE}"
 echo "DRA_CHECK_COVERAGE_REGRESSION: ${DRA_CHECK_COVERAGE_REGRESSION}"
 echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
+echo -e "${no_color}"
 
 
 export CF_TOKEN=$(sed -e 's/^.*"AccessToken":"\([^"]*\)".*$/\1/' ~/.cf/config.json)
 
 custom_cmd
 
-
+echo -e "${no_color}"
 
 
 
@@ -204,10 +212,12 @@ if [ $RESULT -eq 0 ]; then
 
         echo $criteria > dynamicCriteria.json
 
-
+        
         cat dynamicCriteria.json
 
+        echo -e "${no_color}"
         grunt --gruntfile=node_modules/grunt-idra2/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
+        echo -e "${no_color}"
     fi
 else
     echo "DRA is not present";
