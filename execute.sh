@@ -57,9 +57,9 @@ function dra_commands {
         
             #echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
-        else
-            echo -e "File: '$2' is not defined or is empty"
-            echo -e "${no_color}"
+        #else
+            #echo -e "File: '$2' is not defined or is empty"
+            #echo -e "${no_color}"
         fi
         #if [ -n "$3" ] && [ "$3" != " " ]; then
         #    echo -e "\tServer: '$3' is defined and not empty"
@@ -72,31 +72,31 @@ function dra_commands {
         #    echo -e "\tServer: '$3' is not defined or is empty"
         #fi
         
-        echo -e "FINAL dra_grunt_command: $dra_grunt_command"
-        echo -e "${no_color}"
+        #echo -e "FINAL dra_grunt_command: $dra_grunt_command"
+        #echo -e "${no_color}"
         
         
         eval $dra_grunt_command
-    else
-        echo "Event: '$1' is not defined or is empty"
+    #else
+        #echo "Event: '$1' is not defined or is empty"
     fi
     
     echo -e "${no_color}"
 }
 
 
-echo -e "${no_color}"
-echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
-echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
-echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
-echo "DRA_CHECK_TEST_REGRESSION: ${DRA_CHECK_TEST_REGRESSION}"
+#echo -e "${no_color}"
+#echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
+#echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
+#echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
+#echo "DRA_CHECK_TEST_REGRESSION: ${DRA_CHECK_TEST_REGRESSION}"
 
-echo "DRA_COVERAGE_TOOL_SELECT: ${DRA_COVERAGE_TOOL_SELECT}"
-echo "DRA_COVERAGE_LOG_FILE: ${DRA_COVERAGE_LOG_FILE}"
-echo "DRA_MINIMUM_COVERAGE_RATE: ${DRA_MINIMUM_COVERAGE_RATE}"
-echo "DRA_CHECK_COVERAGE_REGRESSION: ${DRA_CHECK_COVERAGE_REGRESSION}"
-echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
-echo -e "${no_color}"
+#echo "DRA_COVERAGE_TOOL_SELECT: ${DRA_COVERAGE_TOOL_SELECT}"
+#echo "DRA_COVERAGE_LOG_FILE: ${DRA_COVERAGE_LOG_FILE}"
+#echo "DRA_MINIMUM_COVERAGE_RATE: ${DRA_MINIMUM_COVERAGE_RATE}"
+#echo "DRA_CHECK_COVERAGE_REGRESSION: ${DRA_CHECK_COVERAGE_REGRESSION}"
+#echo "DRA_COVERAGE_REGRESSION_THRESHOLD: ${DRA_COVERAGE_REGRESSION_THRESHOLD}"
+#echo -e "${no_color}"
 
 
 export CF_TOKEN=$(sed -e 's/^.*"AccessToken":"\([^"]*\)".*$/\1/' ~/.cf/config.json)
@@ -117,7 +117,7 @@ RESULT=$?
 #echo $RESULT
 
 if [ $RESULT -eq 0 ]; then
-    echo "DRA is present";
+    #echo "DRA is present";
     
     criteriaList=()
 
@@ -210,15 +210,15 @@ if [ $RESULT -eq 0 ]; then
 
         echo $criteria > dynamicCriteria.json
 
-        echo "Dynamic Criteria:"
-        cat dynamicCriteria.json
+        #echo "Dynamic Criteria:"
+        #cat dynamicCriteria.json
 
         echo -e "${no_color}"
         grunt --gruntfile=node_modules/grunt-idra2/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
         echo -e "${no_color}"
     fi
-else
-    echo "DRA is not present";
+#else
+    #echo "DRA is not present";
 fi
 
 
