@@ -57,7 +57,6 @@ function dra_commands {
             #echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
         else
-            echo -e "${no_color}"
             echo -e "File: '$2' is not defined or is empty"
             echo -e "${no_color}"
         fi
@@ -72,17 +71,13 @@ function dra_commands {
         #    echo -e "\tServer: '$3' is not defined or is empty"
         #fi
         
-        echo -e "${no_color}"
         echo -e "FINAL dra_grunt_command: $dra_grunt_command"
         echo -e "${no_color}"
         
         
         eval $dra_grunt_command
-        echo -e "${no_color}"
     else
-        echo -e "${no_color}"
         echo "Event: '$1' is not defined or is empty"
-        echo -e "${no_color}"
     fi
 }
 
@@ -127,7 +122,9 @@ if [ $RESULT -eq 0 ]; then
     if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] && \
         [ -n "${DRA_TEST_LOG_FILE}" ] && [ "${DRA_TEST_LOG_FILE}" != " " ]; then
 
+        echo -e "${no_color}"
         dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
+        echo -e "${no_color}"
 
         if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
@@ -212,7 +209,7 @@ if [ $RESULT -eq 0 ]; then
 
         echo $criteria > dynamicCriteria.json
 
-        
+        echo "Dynamic Criteria:"
         cat dynamicCriteria.json
 
         echo -e "${no_color}"
