@@ -79,9 +79,9 @@ function dra_commands {
         eval $dra_grunt_command
         GRUNT_RESULT=$?
         
-#        if [ $GRUNT_RESULT -ne 0 ]; then
-#            exit 1
-#        fi
+        if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
+            exit 1
+        fi
     else
         debugme echo "Event: '$1' is not defined or is empty"
     fi
@@ -204,7 +204,16 @@ if [ $RESULT -eq 0 ]; then
 
 
     if [ ${#criteriaList[@]} -gt 0 ]; then
-        criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"decision\", \"rules\": [ "
+        
+        mode=""
+        
+        if [ "${DRA_ADVISORY_MODE}" == "false" ]; then
+            mode="decision"
+        else
+            mode="advisory"
+        fi
+        
+        criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"$mode\", \"rules\": [ "
 
         for i in "${criteriaList[@]}"
         do
