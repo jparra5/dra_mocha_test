@@ -26,6 +26,14 @@
             "desc_key": "COMMAND_DESC"
         },
         {
+            "name": "ADVISORY_MODE",
+            "type": "Checkbox",
+            "required": "false",
+            "default_value": "false",
+            "label_key": "ADVISORY_MODE_KEY",
+            "desc_key": "ADVISORY_MODE_DESC"
+        },
+        {
             "name": "TEST_TOOL_SELECT",
             "type": "Select",
             "required": "false",
@@ -145,7 +153,9 @@
 set +x
 set +e 
 
-        
+
+
+export DRA_ADVISORY_MODE=#ADVISORY_MODE#
 export DRA_TEST_TOOL_SELECT=#TEST_TOOL_SELECT#
 export DRA_TEST_LOG_FILE=#TEST_LOG_FILE#
 export DRA_MINIMUM_SUCCESS_RATE=#MINIMUM_SUCCESS_RATE#
@@ -175,7 +185,7 @@ export -f custom_cmd
 . $EXT_DIR/execute.sh
 RESULT=$?
         
-if [ $RESULT -ne 0 ]; then
+if [ $RESULT -ne 0 ] && [ \"${DRA_ADVISORY_MODE}\" == \"false\" ]; then
     exit 1
 fi
     "},

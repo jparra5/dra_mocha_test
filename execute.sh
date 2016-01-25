@@ -99,6 +99,7 @@ custom_cmd
 
 echo -e "${no_color}"
 
+debugme echo "DRA_ADVISORY_MODE: ${DRA_ADVISORY_MODE}"
 debugme echo "DRA_TEST_TOOL_SELECT: ${DRA_TEST_TOOL_SELECT}"
 debugme echo "DRA_TEST_LOG_FILE: ${DRA_TEST_LOG_FILE}"
 debugme echo "DRA_MINIMUM_SUCCESS_RATE: ${DRA_MINIMUM_SUCCESS_RATE}"
@@ -230,24 +231,6 @@ if [ $RESULT -eq 0 ]; then
 else
     debugme echo "DRA is not present";
 fi
-
-
-
-
-
-
-
-echo "LOG FILE:"
-if [ -n "${DRA_TEST_LOG_FILE}" ] ; then
-    echo "first if -n"
-fi
-if [ "${DRA_TEST_LOG_FILE}" != " " ]; then
-    echo "second if !=\" \""
-fi
-
-
-
-
 
 
 
