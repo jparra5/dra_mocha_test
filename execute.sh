@@ -79,7 +79,8 @@ function dra_commands {
         eval $dra_grunt_command
         GRUNT_RESULT=$?
         
-        if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
+        #if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
+        if [ $GRUNT_RESULT -ne 0 ]; then
             exit 1
         fi
     else
