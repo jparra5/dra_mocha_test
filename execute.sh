@@ -182,7 +182,8 @@ if [ $RESULT -eq 0 ]; then
             criteriaList=("${criteriaList[@]}" "$criteria")
         fi
 
-        if [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
+        if [ -n "${DRA_CHECK_COVERAGE_REGRESSION}" ] && [ "${DRA_CHECK_COVERAGE_REGRESSION}" == "true" ] &&  \
+            [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
             name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
             condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\" }"
