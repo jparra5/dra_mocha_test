@@ -79,9 +79,9 @@ function dra_commands {
         eval $dra_grunt_command
         GRUNT_RESULT=$?
         
-        if [ $GRUNT_RESULT -ne 0 ]; then
-            exit 1
-        fi
+#        if [ $GRUNT_RESULT -ne 0 ]; then
+#            exit 1
+#        fi
     else
         debugme echo "Event: '$1' is not defined or is empty"
     fi
