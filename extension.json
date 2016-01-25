@@ -59,7 +59,7 @@
             "name": "MINIMUM_SUCCESS_RATE",
             "type": "Text",
             "required": "false",
-            "default_value": " ",
+            "default_value": "",
             "label_key": "MINIMUM_SUCCESS_RATE_KEY",
             "desc_key": "MINIMUM_SUCCESS_RATE_DESC"
         },
@@ -107,7 +107,7 @@
             "name": "MINIMUM_COVERAGE_RATE",
             "type": "Text",
             "required": "false",
-            "default_value": " ",
+            "default_value": "",
             "label_key": "MINIMUM_COVERAGE_RATE_KEY",
             "desc_key": "MINIMUM_COVERAGE_RATE_DESC"
         },
@@ -123,7 +123,7 @@
             "name": "COVERAGE_REGRESSION_THRESHOLD",
             "type": "Text",
             "required": "false",
-            "default_value": " ",
+            "default_value": "",
             "label_key": "COVERAGE_REGRESSION_THRESHOLD_KEY",
             "desc_key": "COVERAGE_REGRESSION_THRESHOLD_DESC"
         }
