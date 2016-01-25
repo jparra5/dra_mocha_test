@@ -81,8 +81,7 @@ function dra_commands {
         
         debugme echo "GRUNT_RESULT: $GRUNT_RESULT"
         
-        #if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
-        if [ $GRUNT_RESULT -ne 0 ]; then
+        if [ $GRUNT_RESULT -ne 0 ] && [ "${DRA_ADVISORY_MODE}" == "false" ]; then
             exit 1
         fi
     else
