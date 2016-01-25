@@ -235,6 +235,16 @@ fi
 
 
 
+echo "LOG FILE:"
+if [ -n "${DRA_TEST_LOG_FILE}" ] ; then
+    echo "first if -n"
+fi
+if [ "${DRA_TEST_LOG_FILE}" != " " ]; then
+    echo "second if !=\" \""
+fi
+
+
+
 
 
 
