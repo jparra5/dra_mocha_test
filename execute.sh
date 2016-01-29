@@ -121,6 +121,8 @@ debugme echo -e "${no_color}"
 ${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}"
 RESULT=$?
 
+debugme echo "DRA_SERVER: ${DRA_SERVER}"
+
 #0 = DRA is present
 #1 = DRA not present or there was an error with the http call (err msg will show)
 #echo $RESULT
