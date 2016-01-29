@@ -238,7 +238,7 @@ if [ $RESULT -eq 0 ]; then
         debugme cat dynamicCriteria.json
 
         echo -e "${no_color}"
-        grunt --gruntfile=node_modules/grunt-idra2/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json 
+        grunt --gruntfile=node_modules/grunt-idra2/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json --no-color
         DECISION_RESULT=$?
         echo -e "${no_color}"
         
