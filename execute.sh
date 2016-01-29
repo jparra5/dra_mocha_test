@@ -76,7 +76,7 @@ function dra_commands {
         debugme echo -e "${no_color}"
         
         
-        eval $dra_grunt_command
+        eval "$dra_grunt_command --no-color"
         GRUNT_RESULT=$?
         
         debugme echo "GRUNT_RESULT: $GRUNT_RESULT"
