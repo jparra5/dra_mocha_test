@@ -3,6 +3,7 @@
 
 import sys
 import requests
+import re
 
 
 
@@ -24,19 +25,31 @@ try:
     r = requests.get( 'https://devops-api.stage1.ng.bluemix.net/v1/toolchains/' + TOOLCHAIN_ID + '?include=metadata', headers={ 'Authorization': BEARER })
     
     data = r.json()
-
-    for items in data[ 'items' ]:
-        #print items[ 'name' ]
-        if items[ 'name' ] == PROJECT_NAME:
+    #print data
+    if r.status_code == 200:
+        
+        for items in data[ 'items' ]:
             #print items[ 'name' ]
-            for services in items[ 'services' ]:
-                #print services[ 'service_id' ]
-                if services[ 'service_id' ] == DRA_SERVICE_NAME:
+            if items[ 'name' ] == PROJECT_NAME:
+                #print items[ 'name' ]
+                for services in items[ 'services' ]:
                     #print services[ 'service_id' ]
-                    DRA_PRESENT = True
-except requests.exceptions.RequestException as e:    # This is the correct syntax
+                    if services[ 'service_id' ] == DRA_SERVICE_NAME:
+                        DRA_PRESENT = True
+                        #Test case
+                        #services[ 'dashboard_url' ]='https://da.oneibmcloud.com/dalskdjl/ljalkdj/'
+                        #print services[ 'dashboard_url' ]
+                        urlRegex = re.compile(r'http\w*://\S+?/');
+                        mo = urlRegex.search(services[ 'dashboard_url' ])
+                        print mo.group()
+                        os.environ["DRA_SERVER"]=mo.group()
+    else:
+        #ERROR response from toolchain API
+        print 'ERROR:', r.status_code, '-', data
+        #print 'DRA was disabled for this session.'
+except requests.exceptions.RequestException as e:
     print 'ERROR: ', e
-    print 'DRA was disabled for this session.'
+    #print 'DRA was disabled for this session.'
     
     
     
