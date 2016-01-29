@@ -117,9 +117,12 @@ debugme echo -e "${no_color}"
 
 
 
-
-${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}"
+OUTPUT_FILE='draserver.txt
+${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
 RESULT=$?
+
+DRA_SERVER=`cat ${OUTPUT_FILE}`
+rm ${OUTPUT_FILE}
 
 debugme echo "DRA_SERVER: ${DRA_SERVER}"
 

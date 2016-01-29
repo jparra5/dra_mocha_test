@@ -9,7 +9,7 @@ import os
 
 
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 5:
     print "ERROR: TOOLCHAIN_ID, BEARER, or PROJECT_NAME are not defined."
     exit(1)
     
@@ -17,8 +17,10 @@ if len(sys.argv) < 4:
 TOOLCHAIN_ID = sys.argv[1]
 BEARER = sys.argv[2]
 PROJECT_NAME = sys.argv[3]
+OUTPUT_FILE = sys.argv[4]
 DRA_SERVICE_NAME = 'draservicebroker'
 DRA_PRESENT = False
+DRA_SERVER = ''
 
 
 
@@ -39,11 +41,10 @@ try:
                         DRA_PRESENT = True
                         #Test case
                         #services[ 'dashboard_url' ]='https://da.oneibmcloud.com/dalskdjl/ljalkdj/'
-                        print services[ 'dashboard_url' ]
+                        #print services[ 'dashboard_url' ]
                         urlRegex = re.compile(r'http\w*://\S+?/');
                         mo = urlRegex.search(services[ 'dashboard_url' ])
-                        print mo.group()
-                        os.environ["DRA_SERVER"]=mo.group()
+                        DRA_SERVER = mo.group()
     else:
         #ERROR response from toolchain API
         print 'ERROR:', r.status_code, '-', data
@@ -52,11 +53,14 @@ except requests.exceptions.RequestException as e:
     print 'ERROR: ', e
     #print 'DRA was disabled for this session.'
     
-    
-    
 
-                
+
+        
+        
 if DRA_PRESENT:
+    f = open(OUTPUT_FILE,'w')
+    f.write(DRA_SERVER)
+    f.close()
     exit(0)
 else:
     exit(1)
