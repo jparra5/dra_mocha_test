@@ -38,7 +38,7 @@ try:
                         DRA_PRESENT = True
                         #Test case
                         #services[ 'dashboard_url' ]='https://da.oneibmcloud.com/dalskdjl/ljalkdj/'
-                        #print services[ 'dashboard_url' ]
+                        print services[ 'dashboard_url' ]
                         urlRegex = re.compile(r'http\w*://\S+?/');
                         mo = urlRegex.search(services[ 'dashboard_url' ])
                         print mo.group()
