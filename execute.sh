@@ -117,7 +117,7 @@ debugme echo -e "${no_color}"
 
 
 
-OUTPUT_FILE='draserver.txt
+OUTPUT_FILE='draserver.txt'
 ${EXT_DIR}/dra-check.py ${PIPELINE_TOOLCHAIN_ID} "${CF_TOKEN}" "${IDS_PROJECT_NAME}" "${OUTPUT_FILE}"
 RESULT=$?
 
