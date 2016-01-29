@@ -44,7 +44,7 @@ try:
                         #print services[ 'dashboard_url' ]
                         urlRegex = re.compile(r'http\w*://\S+?/');
                         mo = urlRegex.search(services[ 'dashboard_url' ])
-                        DRA_SERVER = mo.group()
+                        DRA_SERVER = mo.group()[:-1]
     else:
         #ERROR response from toolchain API
         print 'ERROR:', r.status_code, '-', data
