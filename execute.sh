@@ -95,7 +95,7 @@ function dra_commands {
 
 
 
-if [ -z \"$TOOLCHAIN_TOKEN\" ]; then
+if [ -z "$TOOLCHAIN_TOKEN" ]; then
     export CF_TOKEN=$(sed -e 's/^.*"AccessToken":"\([^"]*\)".*$/\1/' ~/.cf/config.json)
 else
     export CF_TOKEN=$TOOLCHAIN_TOKEN
