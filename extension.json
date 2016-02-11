@@ -166,9 +166,9 @@ export DRA_COVERAGE_REGRESSION_THRESHOLD=#COVERAGE_REGRESSION_THRESHOLD#
         
 function custom_cmd {
     eval #COMMAND#
-    CMD_RESULT=$?
+    CMDRESULT=$?
 
-    if [ CMD_RESULT -ne 0 ]; then
+    if [ CMDRESULT -ne 0 ]; then
         exit 1
     fi
 }
