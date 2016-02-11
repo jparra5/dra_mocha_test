@@ -168,7 +168,7 @@ function custom_cmd {
     eval #COMMAND#
     CMDRESULT=$?
 
-    if [ CMDRESULT -ne 0 ]; then
+    if [ $CMDRESULT -ne 0 ]; then
         exit 1
     fi
 }
