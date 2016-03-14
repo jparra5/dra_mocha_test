@@ -44,7 +44,7 @@ function dra_commands {
     if [ -n "$1" ] && [ "$1" != " " ]; then
         debugme echo "Event: '$1' is defined and not empty"
         
-        dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra2/idra.js -eventType=$1"
+        dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -eventType=$1"
         
         debugme echo -e "\tdra_grunt_command: $dra_grunt_command"
         
@@ -131,7 +131,7 @@ fi
 
 npm install grunt
 npm install grunt-cli
-npm install grunt-idra2
+npm install grunt-idra3
 
 
 custom_cmd
@@ -270,7 +270,7 @@ if [ $RESULT -eq 0 ]; then
         debugme cat dynamicCriteria.json
 
         echo -e "${no_color}"
-        grunt --gruntfile=node_modules/grunt-idra2/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json --no-color
+        grunt --gruntfile=node_modules/grunt-idra3/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json --no-color
         DECISION_RESULT=$?
         echo -e "${no_color}"
         
