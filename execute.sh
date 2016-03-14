@@ -44,19 +44,19 @@ function dra_commands {
     if [ -n "$1" ] && [ "$1" != " " ]; then
         debugme echo "Event: '$1' is defined and not empty"
         
-        dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -eventType=$1"
+        dra_grunt_command="grunt --gruntfile=node_modules/grunt-idra3/idra.js -tool=$1"
         
         debugme echo -e "\tdra_grunt_command: $dra_grunt_command"
         
         if [ -n "$2" ] && [ "$2" != " " ]; then
-            debugme echo -e "\tFile: '$2' is defined and not empty"
+            debugme echo -e "\testResult: '$2' is defined and not empty"
             
-            dra_grunt_command="$dra_grunt_command -file=$2"
+            dra_grunt_command="$dra_grunt_command -testResult=$2"
         
             debugme echo -e "\t\tdra_grunt_command: $dra_grunt_command"
             
         else
-            debugme echo -e "File: '$2' is not defined or is empty"
+            debugme echo -e "testResult: '$2' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
         #if [ -n "$3" ] && [ "$3" != " " ]; then
@@ -69,6 +69,8 @@ function dra_commands {
         #else
         #    echo -e "\tServer: '$3' is not defined or is empty"
         #fi
+        
+        #$dra_grunt_command="$dra_grunt_command -tool=mocha"
         
         debugme echo -e "FINAL dra_grunt_command: $dra_grunt_command"
         debugme echo -e "${no_color}"
@@ -171,7 +173,8 @@ if [ $RESULT -eq 0 ]; then
     if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] && \
         [ -n "${DRA_TEST_LOG_FILE}" ] && [ "${DRA_TEST_LOG_FILE}" != " " ]; then
 
-        dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
+        #dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
+        dra_commands "${DRA_TEST_TOOL_SELECT}" "${DRA_TEST_LOG_FILE}"
 
         if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
@@ -201,7 +204,8 @@ if [ $RESULT -eq 0 ]; then
     if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ] && \
         [ -n "${DRA_COVERAGE_LOG_FILE}" ] && [ "${DRA_COVERAGE_LOG_FILE}" != " " ]; then
 
-        dra_commands "${DRA_COVERAGE_TOOL_SELECT}Coverage" "${DRA_COVERAGE_LOG_FILE}"
+        #dra_commands "${DRA_COVERAGE_TOOL_SELECT}Coverage" "${DRA_COVERAGE_LOG_FILE}"
+        dra_commands "${DRA_COVERAGE_TOOL_SELECT}" "${DRA_COVERAGE_LOG_FILE}"
 
         if [ -n "${DRA_MINIMUM_COVERAGE_RATE}" ] && [ "${DRA_MINIMUM_COVERAGE_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
