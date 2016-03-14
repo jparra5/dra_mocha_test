@@ -272,6 +272,9 @@ if [ $RESULT -eq 0 ]; then
 
         debugme echo "Dynamic Criteria:"
         debugme cat dynamicCriteria.json
+        debugme echo ""
+        debugme echo "CF_ORGANIZATION_ID: $CF_ORGANIZATION_ID"
+        debugme echo "PIPELINE_INITIAL_STAGE_EXECUTION_ID: $PIPELINE_INITIAL_STAGE_EXECUTION_ID"
 
         echo -e "${no_color}"
         grunt --gruntfile=node_modules/grunt-idra3/idra.js -decision=dynamic -criteriafile=dynamicCriteria.json --no-color
