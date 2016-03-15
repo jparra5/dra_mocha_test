@@ -265,7 +265,8 @@ if [ $RESULT -eq 0 ]; then
             mode="advisory"
         fi
         
-        criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"$mode\", \"rules\": [ "
+        #criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"$mode\", \"rules\": [ "
+        criteria="{ \"name\": \"DynamicCriteria\", \"mode\": \"$mode\", \"rules\": [ "
 
         for i in "${criteriaList[@]}"
         do
