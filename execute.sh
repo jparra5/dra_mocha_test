@@ -226,7 +226,8 @@ if [ $RESULT -eq 0 ]; then
             fi
 
             criteria="{ \"name\": \"$name\", \"conditions\": [ "
-            criteria="$criteria $condition_1, $condition_2"
+            #criteria="$criteria $condition_1, $condition_2"
+            criteria="$criteria $condition_2"
             criteria="$criteria ] }"
 
             #echo "criteria:  $criteria"
