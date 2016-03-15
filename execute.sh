@@ -214,13 +214,13 @@ if [ $RESULT -eq 0 ]; then
             name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
             #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
-            condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
+            #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
             #condition_2="{ \"eval\": \"filecontents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
             condition_2="{ \"eval\": \"filecontents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
 
             if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
                 #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
-                condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
+                #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
                 #condition_2="{ \"eval\": \"filecontents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
                 condition_2="{ \"eval\": \"filecontents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
             fi
