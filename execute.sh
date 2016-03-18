@@ -59,18 +59,7 @@ function dra_commands {
             debugme echo -e "testResult: '$2' is not defined or is empty"
             debugme echo -e "${no_color}"
         fi
-        #if [ -n "$3" ] && [ "$3" != " " ]; then
-        #    echo -e "\tServer: '$3' is defined and not empty"
-        #
-        #    dra_grunt_command="$dra_grunt_command -deployAnalyticsServer=$3"
-        #
-        #    echo -e "\t\tdra_grunt_command: $dra_grunt_command"
-        #
-        #else
-        #    echo -e "\tServer: '$3' is not defined or is empty"
-        #fi
         
-        #$dra_grunt_command="$dra_grunt_command -tool=mocha"
         
         debugme echo -e "FINAL dra_grunt_command: $dra_grunt_command"
         debugme echo -e "${no_color}"
@@ -175,12 +164,10 @@ if [ $RESULT -eq 0 ]; then
     if [ -n "${DRA_TEST_TOOL_SELECT}" ] && [ "${DRA_TEST_TOOL_SELECT}" != "none" ] && \
         [ -n "${DRA_TEST_LOG_FILE}" ] && [ "${DRA_TEST_LOG_FILE}" != " " ]; then
 
-        #dra_commands "${DRA_TEST_TOOL_SELECT}UnitTest" "${DRA_TEST_LOG_FILE}"
         dra_commands "${DRA_TEST_TOOL_SELECT}" "${DRA_TEST_LOG_FILE}"
 
         if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
-            #criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
             criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
 
     #        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
@@ -193,11 +180,9 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
             name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
-            #criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
             criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
 
             if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-                #criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_TEST_TOOL_SELECT}UnitTest\" } ] }"
                 criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
             fi
 
@@ -209,26 +194,18 @@ if [ $RESULT -eq 0 ]; then
     if [ -n "${DRA_COVERAGE_TOOL_SELECT}" ] && [ "${DRA_COVERAGE_TOOL_SELECT}" != "none" ] && \
         [ -n "${DRA_COVERAGE_LOG_FILE}" ] && [ "${DRA_COVERAGE_LOG_FILE}" != " " ]; then
 
-        #dra_commands "${DRA_COVERAGE_TOOL_SELECT}Coverage" "${DRA_COVERAGE_LOG_FILE}"
         dra_commands "${DRA_COVERAGE_TOOL_SELECT}" "${DRA_COVERAGE_LOG_FILE}"
 
         if [ -n "${DRA_MINIMUM_COVERAGE_RATE}" ] && [ "${DRA_MINIMUM_COVERAGE_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
-            #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
-            #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
-            #condition_2="{ \"eval\": \"filecontents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
             condition_2="{ \"eval\": \"contents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
 
             if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\" }"
-                #condition_1="{ \"eval\": \"eventType\", \"op\": \"=\", \"value\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
-                #condition_2="{ \"eval\": \"filecontents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\" }"
                 condition_2="{ \"eval\": \"contents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
             fi
 
             criteria="{ \"name\": \"$name\", \"conditions\": [ "
-            #criteria="$criteria $condition_1, $condition_2"
             criteria="$criteria $condition_2"
             criteria="$criteria ] }"
 
@@ -240,11 +217,9 @@ if [ $RESULT -eq 0 ]; then
             [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
             name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
-            #condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\" }"
             condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
 
             if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                #condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forEventType\": \"${DRA_COVERAGE_TOOL_SELECT}Coverage\" }"
                 condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
             fi
 
@@ -268,7 +243,6 @@ if [ $RESULT -eq 0 ]; then
             mode="advisory"
         fi
         
-        #criteria="{ \"name\": \"DynamicCriteria\", \"revision\": 2, \"project\": \"key\", \"mode\": \"$mode\", \"rules\": [ "
         criteria="{ \"name\": \"DynamicCriteria\", \"mode\": \"$mode\", \"rules\": [ "
 
         for i in "${criteriaList[@]}"
