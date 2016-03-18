@@ -122,8 +122,7 @@ if [ $RESULT -eq 0 ]; then
     export DRA_SERVER=`cat ${OUTPUT_FILE}`
     rm ${OUTPUT_FILE}
     
-    npm install grunt
-    npm install grunt-cli
+    
     npm install grunt-idra3
 
     debugme echo "DRA_SERVER: ${DRA_SERVER}"
@@ -133,7 +132,8 @@ fi
 
 
 
-
+npm install grunt
+npm install grunt-cli
 
 
 
