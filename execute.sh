@@ -108,9 +108,17 @@ if [ $RESULT -eq 0 ]; then
     echo "**********************************************************************"
     echo -e "${no_color}"
     
-    export DRA_SERVER=`cat ${OUTPUT_FILE}`
+    DRA_CHECK_OUTPUT=`cat ${OUTPUT_FILE}`
+    IFS=$'\n' read -rd '' -a dradataarray <<< "$DRA_CHECK_OUTPUT"
+    export CF_ORGANIZATION_ID=${dradataarray[0]}
+    export DRA_SERVER=${dradataarray[1]}
     rm ${OUTPUT_FILE}
     
+    #
+    # Hardcoded until brokers are updated (DRA) and created (DLMS)
+    #
+    export DLMS_SERVER=http://devops-datastore.stage1.mybluemix.net
+    export DRA_SERVER=https://dra3.stage1.mybluemix.net
     
     npm install grunt-idra3
 
