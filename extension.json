@@ -26,7 +26,7 @@
                 },
                 {
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_2_KEY",
-                    "value": "UT"
+                    "value": "UNITTEST"
                 },
                 { 
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_3_KEY",
@@ -43,6 +43,22 @@
                 { 
                     "label_key": "LIFE_CYCLE_STAGE_OPTION_6_KEY",
                     "value": "DEPLOY" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_7_KEY",
+                    "value": "OTHERTEST" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_8_KEY",
+                    "value": "CODESCAN" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_9_KEY",
+                    "value": "LICENSESCAN" 
+                },
+                { 
+                    "label_key": "LIFE_CYCLE_STAGE_OPTION_10_KEY",
+                    "value": "PERFTEST" 
                 }
             ]
         },
