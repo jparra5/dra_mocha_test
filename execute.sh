@@ -27,7 +27,7 @@ export no_color='\e[0m' # No Color
 # Simple function to only run command if DEBUG=1 # 
 ### ###############################################
 debugme() {
-  [[ $DEBUG = 1 ]] && "$@" || :
+  [[ $EXTENSION_DEBUG = 1 ]] && "$@" || :
 }
 
 set +e
