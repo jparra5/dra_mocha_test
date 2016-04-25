@@ -193,10 +193,10 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_MINIMUM_SUCCESS_RATE}" ] && [ "${DRA_MINIMUM_SUCCESS_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_SUCCESS_RATE}% success in unit tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_mochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
 
     #        if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-    #            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_karmaMochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE} } ] }"
+    #            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_karmaMochaTestSuccessPercentage\", \"op\": \">=\", \"value\": ${DRA_MINIMUM_SUCCESS_RATE}, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
     #        fi
 
             #echo "criteria:  $criteria"
@@ -205,10 +205,10 @@ if [ $RESULT -eq 0 ]; then
 
         if [ -n "${DRA_CHECK_TEST_REGRESSION}" ] && [ "${DRA_CHECK_TEST_REGRESSION}" == "true" ]; then
             name="No Regression in Unit Tests (${DRA_TEST_TOOL_SELECT})"
-            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+            criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
 
             if [ "${DRA_TEST_TOOL_SELECT}" == "mochaKarma" ]; then
-                criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false } ] }"
+                criteria="{ \"name\": \"$name\", \"conditions\": [ { \"eval\": \"_hasKarmaMochaTestRegressed\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_TEST_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" } ] }"
             fi
 
             #echo "criteria:  $criteria"
@@ -224,10 +224,10 @@ if [ $RESULT -eq 0 ]; then
         if [ -n "${DRA_MINIMUM_COVERAGE_RATE}" ] && [ "${DRA_MINIMUM_COVERAGE_RATE}" != " " ]; then
             name="At least ${DRA_MINIMUM_COVERAGE_RATE}% code coverage in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
-            condition_2="{ \"eval\": \"contents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
+            condition_2="{ \"eval\": \"contents.total.lines.pct\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
 
             if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                condition_2="{ \"eval\": \"contents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\" }"
+                condition_2="{ \"eval\": \"contents.coverage\", \"op\": \">=\", \"value\": \"${DRA_MINIMUM_COVERAGE_RATE}\", \"reportType\": \"CoverageResult\", \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
             fi
 
             criteria="{ \"name\": \"$name\", \"conditions\": [ "
@@ -242,10 +242,10 @@ if [ $RESULT -eq 0 ]; then
             [ -n "${DRA_COVERAGE_REGRESSION_THRESHOLD}" ] && [ "${DRA_COVERAGE_REGRESSION_THRESHOLD}" != " " ]; then
             name="No coverage regression in unit tests (${DRA_COVERAGE_TOOL_SELECT})"
 
-            condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+            condition_1="{ \"eval\": \"_hasIstanbulCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
 
             if [ "${DRA_COVERAGE_TOOL_SELECT}" == "blanket" ]; then
-                condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false }"
+                condition_1="{ \"eval\": \"_hasBlanketCoverageRegressed(-${DRA_COVERAGE_REGRESSION_THRESHOLD})\", \"op\": \"=\", \"value\": false, \"forTool\": \"${DRA_COVERAGE_TOOL_SELECT}\", \"forStage\": \"${DRA_LIFE_CYCLE_STAGE_SELECT}\" }"
             fi
 
             criteria="{ \"name\": \"$name\", \"conditions\": [ "
